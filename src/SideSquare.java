@@ -15,6 +15,11 @@ public class SideSquare extends Square{
     SideSquare(String name, int cost) {
         super(name, cost);
     }
+    SideSquare(String name){
+        this(name, 0);
+        if(name.equals(GO))
+            cost = GO_LAND_MONEY;
+    }
 
     public void perform(Player player){
         switch (name){
@@ -35,7 +40,6 @@ public class SideSquare extends Square{
                 }break;
             default:
                 System.out.println("Unknown Side");
-
         }
     }
 }

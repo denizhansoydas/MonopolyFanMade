@@ -24,6 +24,7 @@ public class Game {
     private ArrayList[] cards; //index 0: chance cards, index 1: Community chest Cards.
     private Die[] dice;
     private Player[] players;
+    private Banker banker;
 
     Game(){
         dice = new Die[2];
@@ -36,6 +37,7 @@ public class Game {
         players[1] = new Player(this);
         cards[0] = new ArrayList<>();
         cards[1] = new ArrayList<>();
+        banker = new Banker(this);
     }
     Game(String listPath, String propertyPath){
         this();
@@ -74,6 +76,7 @@ public class Game {
                 String costStr = (String)((JSONObject)obj).get("cost");
                 Land land = new Land(name, Integer.parseInt(costStr));
                 squares[Integer.parseInt(locationStr) - 1] = land;
+                banker.getProperties().add(land);
             }
             for(Object obj: railRoadList){
                 String locationStr =  (String)((JSONObject)obj).get("id");
@@ -81,6 +84,7 @@ public class Game {
                 String costStr = (String)((JSONObject)obj).get("cost");
                 RailRoad railRoad = new RailRoad(name, Integer.parseInt(costStr));
                 squares[Integer.parseInt(locationStr) - 1] = railRoad;
+                banker.getProperties().add(railRoad);
             }
             for(Object obj: companyList){
                 String locationStr =  (String)((JSONObject)obj).get("id");
@@ -88,6 +92,7 @@ public class Game {
                 String costStr = (String)((JSONObject)obj).get("cost");
                 Company company = new Company(name, Integer.parseInt(costStr));
                 squares[Integer.parseInt(locationStr) - 1] = company;
+                banker.getProperties().add(company);
             }
             for(int location : COMMUNITY_CHEST_LOCATIONS){
                 squares[location - 1] = new ActionSquare("Community Chest", 0);
@@ -95,15 +100,18 @@ public class Game {
             for(int location : CHANCE_LOCATIONS){
                 squares[location - 1] = new ActionSquare("Chance", 0);
             }
-            System.out.println("Squares added.(Except sides!)");
-            for(Square square: squares){
-                if(square != null)
-                    System.out.println(square);
-            }
-
+            squares[GO_LOCATION - 1] = new SideSquare(SideSquare.GO);
+            squares[JAIL_LOCATION - 1] = new SideSquare(SideSquare.JAIL);
+            squares[FREE_PARKING_LOCATION - 1] = new SideSquare(SideSquare.FREE_PARKING);
+            squares[GO_TO_JAIL_LOCATION - 1] = new SideSquare(SideSquare.GO_TO_JAIL);
+            System.out.println("Squares added.");
 
         }catch(IOException | ParseException e){
             e.printStackTrace();
+        }
+        for(Square square: squares){
+            if(square != null)
+                System.out.println(square);
         }
 
     }

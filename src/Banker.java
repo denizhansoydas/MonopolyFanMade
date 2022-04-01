@@ -1,6 +1,6 @@
-public class Banker extends User{
+public class Banker extends Person {
     public static final int INITIAL_MONEY = 100000;
-    Banker(){
-        super(INITIAL_MONEY);
+    Banker(Game game){
+        super(game, INITIAL_MONEY);
     }
 }

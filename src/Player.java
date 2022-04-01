@@ -1,4 +1,4 @@
-public class Player extends User{
+public class Player extends Person {
     public static final int INITIAL_MONEY = 15000;
     private int location; // start: 1
     int jailCount;
