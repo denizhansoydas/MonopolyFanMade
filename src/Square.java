@@ -1,6 +1,6 @@
 public abstract class Square {
     protected String name;
-    private int cost;
+    protected int cost;
 
 
     Square(String name, int cost){
