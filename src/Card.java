@@ -24,4 +24,9 @@ public class Card {
                 System.out.println("Unknown Card.");
         }
     }
+
+    @Override
+    public String toString() {
+        return text;
+    }
 }

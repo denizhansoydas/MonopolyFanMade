@@ -25,9 +25,6 @@ public abstract class Square {
 
     @Override
     public String toString() {
-        return "Square{" +
-                "name='" + name + '\'' +
-                ", cost=" + cost +
-                '}';
+        return name;
     }
 }

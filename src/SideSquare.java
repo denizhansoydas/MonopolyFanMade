@@ -21,25 +21,37 @@ public class SideSquare extends Square{
             cost = GO_LAND_MONEY;
     }
 
-    public void perform(Player player){
+    public String perform(Player player){
+        String res = null;
         switch (name){
             case "go":
                 player.takeMoney(GO_LAND_MONEY);
+                res = "went to go";
                 break;
             case "free parking":
+                res = "is in Free Parking";
+                player.setInFreeParking(true);
                 break;
             case "go to jail":
+                res = "went to jail";
                 player.setLocation(Game.JAIL_LOCATION);
+                player.setJailCount(0);
                 break;
             case "jail":
-                if(player.getJailCount() >= JAIL_TURNS)
-                    System.out.println("release");
+                if(player.getJailCount() >= JAIL_TURNS - 1)
+                    player.setJailCount(-1);
                 else{
-                    System.out.println("wait");
-                    player.setJailCount(player.getJailCount() + 1);
+                    if(player.getJailCount() == -1){
+                        res = "went to jail";
+                        player.setJailCount(0);
+                    }else{
+                        res = "in jail (count=" + player.jailCount + ")";
+                        player.setJailCount(player.getJailCount() + 1);
+                    }
                 }break;
             default:
                 System.out.println("Unknown Side");
         }
+        return res;
     }
 }

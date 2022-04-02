@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 
 public abstract class Person {
-    private int money;
-    private Game game;
-    private ArrayList<PropertySquare> properties;
+    protected int money;
+    protected Game game;
+    protected ArrayList<PropertySquare> properties;
+    protected String name;
     Person(Game game, int money){
         this.money = money;
         this.game = game;
@@ -23,7 +24,7 @@ public abstract class Person {
     public boolean giveMoney(int money){
         if(this.money < money)
             return false;
-        this.money += money;
+        this.money -= money;
         return true;
     }
 
@@ -41,5 +42,13 @@ public abstract class Person {
 
     public void setProperties(ArrayList<PropertySquare> properties) {
         this.properties = properties;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
