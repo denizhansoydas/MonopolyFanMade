@@ -11,6 +11,7 @@ public class ActionSquare extends Square{
             if(card.getText().equals("Advance to Go (Collect $200)")){
                 caller.setLocation(1);
                 caller.setMoney(caller.getMoney() + SideSquare.GO_LAND_MONEY);
+                game.getBanker().giveMoney(SideSquare.GO_LAND_MONEY);
                 str += " -advance to go";
             }
         }
@@ -19,6 +20,7 @@ public class ActionSquare extends Square{
             if(card.getText().equals("Advance to Go (Collect $200)")){
                 caller.setLocation(1);
                 caller.setMoney(caller.getMoney() + SideSquare.GO_LAND_MONEY);
+                game.getBanker().giveMoney(SideSquare.GO_LAND_MONEY);
                 str = "advance to go (collect 200)";
             }
         }

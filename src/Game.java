@@ -43,7 +43,7 @@ public class Game {
         players[0].setName("Player 1");
         players[1].setName("Player 2");
     }
-    Game(String listPath, String propertyPath, String outputFilePath){
+    Game(String listPath, String propertyPath, String outputFilePath, String[] args){
         this();
         JSONArray chanceList;
         JSONArray communityChestList;
@@ -115,13 +115,15 @@ public class Game {
             squares[JAIL_LOCATION - 1] = new SideSquare(SideSquare.JAIL);
             squares[FREE_PARKING_LOCATION - 1] = new SideSquare(SideSquare.FREE_PARKING);
             squares[GO_TO_JAIL_LOCATION - 1] = new SideSquare(SideSquare.GO_TO_JAIL);
+            squares[4] = new TaxSquare("tax square", 100);
+            squares[38] = new TaxSquare("tax square", 100);
 
         }catch(IOException | ParseException e){
             e.printStackTrace();
         }
         Scanner scan = null;
         try {
-            scan = new Scanner(new File("command.txt"));
+            scan = new Scanner(new File(args[0]));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -133,12 +135,16 @@ public class Game {
                     printSummary(outputFilePath, bw);
                 }
                 else{
-                    String info = line.split(";")[1];
-                    int dice = Integer.parseInt(info);
+                    String info[] = line.split(";");
+                    int dice = Integer.parseInt(info[1]);
+                    if(info[0].equals("Player 1"))
+                        turn = 0;
+                    else
+                        turn = 1;
                     //System.out.println(players[turn].move(dice));
+
                     bw.write(players[turn].move(dice));
                     bw.newLine();
-                    turn = turn == 0 ? 1 : 0;
                     if(players[0].getMoney() <= 0 || players[1].getMoney() <= 0)
                         break;
                 }
@@ -173,10 +179,10 @@ public class Game {
         for(int i = 0; i < players[1].getProperties().size() - 1; i++){
             //System.out.println(players[1].getProperties().get(i).getName() + ",");
             bw.write(players[1].getProperties().get(i).getName() + ",");
-            bw.newLine();
         }
         //System.out.println(players[1].getProperties().get(players[1].getProperties().size() - 1).getName());
-        bw.write(players[1].getProperties().get(players[1].getProperties().size() - 1).getName());
+        if(!players[1].getProperties().isEmpty())
+            bw.write(players[1].getProperties().get(players[1].getProperties().size() - 1).getName());
         bw.newLine();
 //        System.out.println("Banker\t" + banker.getMoney());
         bw.write("Banker\t" + banker.getMoney());

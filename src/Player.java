@@ -43,6 +43,11 @@ public class Player extends Person {
         else if(game.getSquares()[location - 1] instanceof SideSquare){
             res = ((SideSquare)game.getSquares()[location - 1]).perform(this);
         }
+        else if(game.getSquares()[location - 1] instanceof TaxSquare){
+            res = "paid Tax";
+            giveMoney(game.getSquares()[location - 1].getCost());
+            game.getBanker().takeMoney(game.getSquares()[location - 1].getCost());
+        }
         return res;
     }
 
@@ -66,7 +71,7 @@ public class Player extends Person {
     }
     public void payRent(Player player, int cost){
         if(money < cost){
-            System.out.println("goes bankrupt");
+            //System.out.println("goes bankrupt");
         }
         else{
             giveMoney(cost);
